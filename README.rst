@@ -21,16 +21,9 @@ hoppy requires:
 Usage
 -----
 
-Use neb to notify Hoptoad of an app deploy::
+Trinity doesn't support authentication, so this is a really simple interface.
 
-    import hoppy.deploy
-    hoppy.api_key = '<project API key>'
-    hoppy.deploy.Deploy().deploy(env='PRODUCTION', scm_revision='1a6a445',
-            scm_repository='git@github.com:peplin/hoppy.git')
+Use neb to retreive a specific node::
 
-Use hoppy to retreive a specific error::
-
-    import hoppy.error
-    hoppy.account = '<your account name>'
-    hoppy.auth_token = '<your personal API auth token>'
-    print hoppy.error.Error().find(2035230).environment
+    import neb.error
+    print neb.node.Node().find(2035230)
