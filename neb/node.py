@@ -8,6 +8,8 @@ class Node(TrinityResource):
         return self.post(self._node_path(), payload=params)
 
     def connect(self, to, type, **kwargs):
+        if isinstance(to, Node):
+            to = to.id
         return Relationship().create(start=self.id, to=to, type=type, **kwargs) 
 
     def statistic(self, stat):
