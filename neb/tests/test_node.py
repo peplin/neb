@@ -1,3 +1,4 @@
+from nose.tools import eq_, ok_
 import json
 import unittest
 import mockito
@@ -22,18 +23,24 @@ class NodeTests(unittest.TestCase):
         mockito.unstub()
 
     def test_create(self):
-        assert self.node
+        ok_(self.node)
+
+    def test_id(self):
+        eq_(self.node.id, fake_node['id'])
+
+    def test_data(self):
+        eq_(self.node.node, fake_node['node'])
 
     def test_connect_to_id(self):
         relationship = self.node.connect(to='peplin', type='works_for')
-        assert relationship
+        ok_(relationship)
 
     def test_connect_to_node(self):
         employer = self.node
         employee = Node().create(node_id='peplin', node=self.data)
         relationship = employee.connect(to=employer, type='works_for')
-        assert relationship
+        ok_(relationship)
 
     def test_statistic(self):
         statistic = self.node.statistic(stat='topics')
-        assert statistic
+        ok_(statistic)

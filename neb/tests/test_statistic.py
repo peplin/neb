@@ -1,3 +1,4 @@
+from nose.tools import eq_, ok_
 import json
 import unittest
 import mockito
@@ -15,12 +16,12 @@ class NodeStatisticTests(unittest.TestCase):
                 mockito.any(), path=mockito.any(), payload=mockito.any(),
                 headers=mockito.any()).thenReturn(
                 json.dumps(fake_node_statistics))
+        self.statistic = NodeStatistic().calculate(node_id='bueda',
+                stat='topics')
 
     def tearDown(self):
         super(NodeStatisticTests, self).tearDown()
         mockito.unstub()
 
     def test_calculate(self):
-        statistic = NodeStatistic().calculate(node_id='bueda',
-                stat='topics')
-        assert statistic
+        ok_(self.statistic)
