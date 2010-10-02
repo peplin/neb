@@ -12,11 +12,13 @@ class TrinityResource(Resource):
             self.from_dict(json.loads(data))
 
     def base_uri(self, use_ssl=False):
-        base = 'http://THE_IP_ADDRESS_TODO'
+        base = 'http://localhost:8888'
         base = base.replace('http://', 'https://') if use_ssl else base
         return base
 
     def request(self, *args, **kwargs):
+        if 'payload' in kwargs:
+            kwargs['payload'] = json.dumps(kwargs['payload'])
         response = super(TrinityResource, self).request(*args, **kwargs)
         return response.body_string()
 

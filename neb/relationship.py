@@ -3,7 +3,7 @@ from neb.api import TrinityResource
 class Relationship(TrinityResource):
     def create(self, start, to, type, **kwargs):
         params = dict(start=start, to=to, type=type, data=kwargs)
-        return self.post(self._relationship_path(start), params)
+        return self.post(self._relationship_path(start), payload=params)
 
     @staticmethod
     def _relationship_path(node_id, relationship_id=None):

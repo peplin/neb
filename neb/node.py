@@ -5,7 +5,7 @@ from neb.statistic import NodeStatistic
 class Node(TrinityResource):
     def create(self, node_id, **kwargs):
         params = dict(id=node_id, node=kwargs)
-        return self.post(self._node_path(), kwargs)
+        return self.post(self._node_path(), payload=params)
 
     def connect(self, to, type, **kwargs):
         return Relationship().create(start=self.id, to=to, type=type, **kwargs) 
