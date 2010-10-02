@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 execfile(os.path.join(ROOT_PATH, 'neb/version.py'))
-long_description = open(os.path.join(ROOT_PATH, 'README.rst')).read()
+long_description = open(os.path.join(ROOT_PATH, 'README.md')).read()
 
 classifiers = [
     'Development Status :: 4 - Beta',

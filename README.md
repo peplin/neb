@@ -19,7 +19,7 @@ Trinity doesn't support authentication, so this is a really simple interface.
 
     import neb.node
     data = {'username': 'bueda', 'user_id': 12345}
-    neb.node.Node().create(node_id='bueda', node=data)
+    neb.node.Node().create(node_id='bueda', **data)
 
 ### Create a relationship between two nodes
 
@@ -27,8 +27,8 @@ Without having to have either node loaded:
 
     import neb.relationship
     data = {'since': '09/20/09'}
-    neb.relationship.Relationship().create(start='bueda', to='peplin',
-            type='works_for', **data)
+    neb.relationship.Relationship().create(from_node='bueda', to='peplin',
+            link_type='works_for', **data)
 
 Or, if you already have one of the nodes:
 
@@ -37,7 +37,7 @@ Or, if you already have one of the nodes:
     node = neb.node.Node().create(node_id='bueda', **data)
 
     data = {'since': '09/20/09'}
-    node.connect(to='peplin', type='works_for', **data)
+    node.connect(to='peplin', link_type='works_for', **data)
 
 Or, if you already have both of the nodes:
 
@@ -49,7 +49,7 @@ Or, if you already have both of the nodes:
     employee = neb.node.Node().create(node_id='peplin', **data)
 
     data = {'since': '09/20/09'}
-    employee.connect(to=employer, type='works_for', **data)
+    employee.connect(to=employer, link_type='works_for', **data)
 
 ### Retreive node statistics
 
