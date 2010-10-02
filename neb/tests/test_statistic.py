@@ -1,18 +1,26 @@
+import json
 import unittest
 import mockito
 
-from neb.tests.mock import mock_trinity
-from neb.node import Statistic
+from neb.statistic import NodeStatistic
+from neb.api import TrinityResource
 import neb
 
-class StatisticTests(unittest.TestCase):
+fake_node_statistics = {'zing': 'bat'}
+
+class NodeStatisticTests(unittest.TestCase):
     def setUp(self):
-        super(StatisticTests, self).setUp()
-        mock_trinity()
+        super(NodeStatisticTests, self).setUp()
+        mockito.when(TrinityResource).request(
+                mockito.any(), path=mockito.any(), payload=mockito.any(),
+                headers=mockito.any()).thenReturn(
+                json.dumps(fake_node_statistics))
 
     def tearDown(self):
-        super(StatisticTests, self).tearDown()
+        super(NodeStatisticTests, self).tearDown()
         mockito.unstub()
 
-    def test_find(self):
-        e = trinity.node.Statistic().find(203543, 'topics')
+    def test_calculate(self):
+        statistic = NodeStatistic().calculate(node_id='bueda',
+                stat='topics')
+        assert statistic

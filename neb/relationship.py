@@ -1,18 +1,16 @@
-from trinity.api import TrinityResource
+from neb.api import TrinityResource
 
 class Relationship(TrinityResource):
-    def find(self, node_id):
-        return self.get(self._relationship_path(node_id, relationship_id))
-
-    def all(self, node_id):
-        return self.get(self._relationship_path(node_id))
+    def create(self, start, to, type, **kwargs):
+        params = dict(start=start, to=to, type=type, data=kwargs)
+        return self.post(self._relationship_path(start), params)
 
     @staticmethod
     def _relationship_path(node_id, relationship_id=None):
         if relationship_id:
-            path = 'node/%d/relationships/%d' % (node_id, relationship_id)
+            path = 'node/%s/relationships/%d' % (node_id, relationship_id)
         else:
-            path = 'node/%d/relationships' % node_id
+            path = 'node/%s/relationships' % node_id
         return path
 
     def request(self, *args, **kwargs):

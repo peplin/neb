@@ -1,3 +1,4 @@
+import json
 from restkit import Resource
 
 class TrinityAPIError(Exception):
@@ -8,10 +9,10 @@ class TrinityResource(Resource):
         self.host = self.base_uri(use_ssl)
         super(TrinityResource, self).__init__(self.host, follow_redirect=True)
         if data:
-            self.from_json(simplejson.loads(data))
+            self.from_dict(json.loads(data))
 
     def base_uri(self, use_ssl=False):
-        base = 'http://THE_IP_ADDRESS_TODO' % self.account
+        base = 'http://THE_IP_ADDRESS_TODO'
         base = base.replace('http://', 'https://') if use_ssl else base
         return base
 

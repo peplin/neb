@@ -1,12 +1,25 @@
-from trinity.api import TrinityResource
+from neb.api import TrinityResource
+from neb.relationship import Relationship
+from neb.statistic import NodeStatistic
 
 class Node(TrinityResource):
-    def find(self, node_id):
-        return self.get(self._node_path(node_id))
-    
+    def create(self, node_id, **kwargs):
+        params = dict(id=node_id, node=kwargs)
+        return self.post(self._node_path(), kwargs)
+
+    def connect(self, to, type, **kwargs):
+        return Relationship().create(start=self.id, to=to, type=type, **kwargs) 
+
+    def statistic(self, stat):
+        return NodeStatistic().calculate(node_id=self.id, stat=stat)
+
     @staticmethod
-    def _node_path(node_id):
-        return 'node/%(node_id)d' % node_id
+    def _node_path(node_id=None):
+        if node_id:
+            path = 'node/%s' % node_id
+        else:
+            path = 'node'
+        return path
 
     def request(self, *args, **kwargs):
         response = super(Node, self).request(*args, **kwargs)
