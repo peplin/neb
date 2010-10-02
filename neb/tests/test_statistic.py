@@ -17,7 +17,7 @@ class NodeStatisticTests(unittest.TestCase):
                 headers=mockito.any()).thenReturn(
                 json.dumps(fake_node_statistics))
         self.statistic = NodeStatistic().calculate(node_id='bueda',
-                stat='topics')
+                statistic='topics')
 
     def tearDown(self):
         super(NodeStatisticTests, self).tearDown()

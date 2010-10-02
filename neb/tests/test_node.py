@@ -16,7 +16,9 @@ class NodeTests(unittest.TestCase):
                 mockito.any(), path=mockito.any(), payload=mockito.any(),
                 headers=mockito.any()).thenReturn(json.dumps(fake_node))
         self.data = {'username': 'bueda', 'user_id': 12345}
-        self.node = Node().create(node_id='bueda', node=self.data)
+        self.node = Node().create('bueda',
+                username=fake_node['node']['username'],
+                user_id=fake_node['node']['user_id'])
 
     def tearDown(self):
         super(NodeTests, self).tearDown()
@@ -32,15 +34,17 @@ class NodeTests(unittest.TestCase):
         eq_(self.node.node, fake_node['node'])
 
     def test_connect_to_id(self):
-        relationship = self.node.connect(to='peplin', type='works_for')
+        data = {'username': 'peplin', 'user_id': 6789}
+        node = Node().create('peplin', **data)
+        relationship = self.node.connect(to='peplin', link_type='works_for')
         ok_(relationship)
 
     def test_connect_to_node(self):
         employer = self.node
-        employee = Node().create(node_id='peplin', node=self.data)
-        relationship = employee.connect(to=employer, type='works_for')
+        employee = Node().create('peplin', **self.data)
+        relationship = employee.connect(to=employer, link_type='works_for')
         ok_(relationship)
 
     def test_statistic(self):
-        statistic = self.node.statistic(stat='topics')
+        statistic = self.node.statistic(statistic='topics')
         ok_(statistic)

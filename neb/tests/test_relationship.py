@@ -16,8 +16,11 @@ class RelationshipTests(unittest.TestCase):
         mockito.when(TrinityResource).request(
                 mockito.any(), path=mockito.any(), payload=mockito.any(),
                 headers=mockito.any()).thenReturn(json.dumps(fake_relationship))
-        self.relationship = Relationship().create(start='bueda',
-                to='peplin', type='is_a')
+        self.relationship = Relationship().create(
+                from_node=fake_relationship['from_node'],
+                to=fake_relationship['to'],
+                link_type=fake_relationship['link_type'],
+                **fake_relationship['data'])
 
     def tearDown(self):
         super(RelationshipTests, self).tearDown()
