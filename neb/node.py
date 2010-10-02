@@ -4,6 +4,8 @@ from neb.statistic import NodeStatistic
 
 class Node(TrinityResource):
     def create(self, node_id, **kwargs):
+        if isinstance(node_id, str) or isinstance(node_id, unicode):
+            node_id = node_id.replace('/', '-')
         params = dict(id=node_id, node=kwargs)
         return self.post(self._node_path(), payload=params)
 
