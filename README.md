@@ -58,11 +58,11 @@ instance of Trinity offers. In this case, assume it has a 'topics' node
 statistic.
 
     import neb.statistic 
-    neb.statistic.Statistic().calculate(node_id='bueda', stat='topics')
+    neb.statistic.NodeStatistic().calculate(node_id='bueda', statistic='topics')
 
 If you have the node instance already:
 
     import neb.node
     data = {'username': 'bueda', 'user_id': 12345}
     node = neb.node.Node().create(node_id='bueda', **data)
-    node.statistic(stat='topics')
+    node.statistic(statistic='topics')
