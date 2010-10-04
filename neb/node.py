@@ -29,3 +29,9 @@ class Node(TrinityResource):
     def request(self, *args, **kwargs):
         response = super(Node, self).request(*args, **kwargs)
         return Node(data=response)
+
+    def __str__(self):
+        if hasattr(self, 'id'):
+            return "<%s>" % self.id
+        else:
+            return super(Node, self).__str__()

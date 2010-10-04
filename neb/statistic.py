@@ -11,3 +11,9 @@ class NodeStatistic(TrinityResource):
     def request(self, *args, **kwargs):
         response = super(NodeStatistic, self).request(*args, **kwargs)
         return NodeStatistic(data=response)
+
+    def __str__(self):
+        if hasattr(self, 'results'):
+            return "<%s>" % self.results
+        else:
+            return super(NodeStatistic, self).__str__()

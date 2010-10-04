@@ -17,3 +17,9 @@ class Relationship(TrinityResource):
     def request(self, *args, **kwargs):
         response = super(Relationship, self).request(*args, **kwargs)
         return Relationship(data=response)
+
+    def __str__(self):
+        if hasattr(self, 'from_node') and hasattr(self, 'to'):
+            return "<%s => %s>" % (self.from_node, self.to)
+        else:
+            return super(Relationship, self).__str__()
