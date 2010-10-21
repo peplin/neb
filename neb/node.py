@@ -9,11 +9,12 @@ class Node(TrinityResource):
         params = dict(id=node_id, node=kwargs)
         return self.post(self._node_path(), payload=params)
 
-    def connect(self, to, link_type, **kwargs):
+    def connect(self, to, link_type, append=None, increment=None, **kwargs):
         if isinstance(to, Node):
             to = to.id
         return Relationship().create(from_node=self.id, to=to,
-                link_type=link_type, **kwargs) 
+                link_type=link_type, append=append, increment=increment,
+                **kwargs) 
 
     def statistic(self, statistic):
         return NodeStatistic().calculate(node_id=self.id, statistic=statistic)

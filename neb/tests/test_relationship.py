@@ -1,4 +1,4 @@
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 import json
 import unittest
 import mockito
@@ -28,7 +28,7 @@ class RelationshipTests(unittest.TestCase):
         mockito.unstub()
 
     def test_create(self):
-        assert self.relationship
+        ok_(self.relationship)
 
     def test_from(self):
         eq_(self.relationship.from_node, self.fake_relationship['from_node'])
@@ -44,7 +44,7 @@ class RelationshipTests(unittest.TestCase):
 
 class ExtendedRelationshipTests(unittest.TestCase):
     fake_relationship = {'from_node': 'peplin', 'to': 'bueda',
-            'data': {'other': 'data', 'new_data': 'banf'},
+            'data': {'other': 'data', 'new_data': 'banf', 'count': 1},
             'link_type': 'works_for'}
 
     def setUp(self):
@@ -57,7 +57,6 @@ class ExtendedRelationshipTests(unittest.TestCase):
                 from_node=self.fake_relationship['from_node'],
                 to=self.fake_relationship['to'],
                 link_type=self.fake_relationship['link_type'],
-                append=True,
                 **self.fake_relationship['data'])
 
     def tearDown(self):
@@ -65,7 +64,18 @@ class ExtendedRelationshipTests(unittest.TestCase):
         mockito.unstub()
 
     def test_create(self):
-        assert self.relationship
+        ok_(self.relationship)
+        ok_('append' not in self.relationship.data)
 
     def test_data(self):
         eq_(self.relationship.data, self.fake_relationship['data'])
+
+    def test_increment(self):
+        relationship = Relationship().create(
+                from_node=self.fake_relationship['from_node'],
+                to=self.fake_relationship['to'],
+                link_type=self.fake_relationship['link_type'],
+                increment=['count'],
+                **self.fake_relationship['data'])
+
+        ok_('increment' not in relationship.data)

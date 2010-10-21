@@ -1,9 +1,10 @@
 from neb.api import TrinityResource
 
 class Relationship(TrinityResource):
-    def create(self, from_node, to, link_type, **kwargs):
+    def create(self, from_node, to, link_type, append=None, increment=None,
+            **kwargs):
         params = dict(from_node=from_node, to=to, link_type=link_type,
-                data=kwargs)
+                append=append, increment=increment, data=kwargs)
         return self.post(self._relationship_path(from_node), payload=params)
 
     @staticmethod
