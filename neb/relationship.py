@@ -4,7 +4,11 @@ class Relationship(TrinityResource):
     def create(self, from_node, to, link_type, append=None, increment=None,
             **kwargs):
         params = dict(from_node=from_node, to=to, link_type=link_type,
-                append=append, increment=increment, data=kwargs)
+                data=kwargs)
+        if append:
+            params[append] = append
+        if increment:
+            params['increment'] = increment
         return self.post(self._relationship_path(from_node), payload=params)
 
     @staticmethod
